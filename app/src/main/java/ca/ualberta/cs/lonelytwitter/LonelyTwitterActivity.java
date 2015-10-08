@@ -26,7 +26,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class LonelyTwitterActivity extends Activity {
 
-	private static final String FILENAME = "file.sav";
+	private static final String FILENAME = "file.sav"; // model
 	private EditText bodyText;
 	private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 	private ListView oldTweetsList;
@@ -49,8 +49,9 @@ public class LonelyTwitterActivity extends Activity {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
 				tweets.add(new NormalTweet(text));
-				saveInFile();
-				adapter.notifyDataSetChanged();
+				saveInFile(); // model
+				// dataObject.saveInFile() //controller
+				adapter.notifyDataSetChanged(); // view
 
 			}
 		});
