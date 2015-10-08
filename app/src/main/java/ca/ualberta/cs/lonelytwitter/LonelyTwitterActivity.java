@@ -52,7 +52,6 @@ public class LonelyTwitterActivity extends Activity {
 				saveInFile(); // model
 				// dataObject.saveInFile() //controller
 				adapter.notifyDataSetChanged(); // view
-
 			}
 		});
 	}
