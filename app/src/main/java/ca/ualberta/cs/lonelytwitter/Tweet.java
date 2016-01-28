@@ -23,6 +23,10 @@ public abstract class Tweet {
         return date;
     }
 
+    public String getMessage() {
+        return this.message;
+    }
+
     public void setMessage(String message) throws TweetTooLongException {
         if (message.length() > 140) {
             throw new TweetTooLongException();
