@@ -14,6 +14,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -31,6 +32,15 @@ public class LonelyTwitterActivity extends Activity {
 	private ListView oldTweetsList;
 
 	private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+
+	public ArrayAdapter<Tweet> getAdapter() {
+		return adapter;
+	}
+
+	public void setAdapter(ArrayAdapter<Tweet> adapter) {
+		this.adapter = adapter;
+	}
+
 	private ArrayAdapter<Tweet> adapter;
 	
 	/** Called when the activity is first created. */
@@ -57,6 +67,14 @@ public class LonelyTwitterActivity extends Activity {
 				//saveInFile(text, new Date(System.currentTimeMillis()));
 				//finish();
 
+				//
+				//
+				Intent intent = new Intent(LonelyTwitterActivity.this, IntentReaderActivity.class);
+				intent.putExtra(IntentReaderActivity.TEXT_TO_TRANSFORM_KEY, "hello message");
+				intent.putExtra(IntentReaderActivity.MODE_OF_TRANSFORM_KEY, IntentReaderActivity.NORMAL);
+				startActivity(intent);
+				//
+				//
 			}
 		});
 	}
