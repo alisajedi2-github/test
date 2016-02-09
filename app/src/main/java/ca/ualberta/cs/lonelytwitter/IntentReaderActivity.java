@@ -29,16 +29,7 @@ public class IntentReaderActivity extends Activity {
 
         //
         //
-        Intent intent = getIntent();
-//        mode = ((intent.getExtras()==null) ? NORMAL : intent.getExtras().getInt(MODE_OF_TRANSFORM_KEY));
-        mode = intent.getIntExtra(MODE_OF_TRANSFORM_KEY, NORMAL);
 
-        if (intent.getStringExtra(TEXT_TO_TRANSFORM_KEY) != null)
-            text = transformText(intent.getStringExtra(TEXT_TO_TRANSFORM_KEY));
-        else
-            text = "default text";
-
-        ((TextView)findViewById(R.id.intentText)).setText(text);
         //
         //
     }
