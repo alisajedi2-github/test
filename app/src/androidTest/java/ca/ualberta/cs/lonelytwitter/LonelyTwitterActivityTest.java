@@ -3,8 +3,6 @@ package ca.ualberta.cs.lonelytwitter;
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 
-import junit.framework.TestCase;
-
 /**
  * Created by wz on 14/09/15.
  */

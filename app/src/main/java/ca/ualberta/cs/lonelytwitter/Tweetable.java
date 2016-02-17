@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public interface Tweetable {
     // getMessage returns the tweet message.
-    public String getMessage();
-    public Date getDate();
+    String getMessage();
+
+    Date getDate();
 }

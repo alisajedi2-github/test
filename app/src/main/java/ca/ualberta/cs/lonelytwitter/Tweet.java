@@ -9,8 +9,6 @@ public abstract class Tweet {
     protected Date date;
     protected String message;
 
-    public abstract Boolean isImportant();
-
     public Tweet(Date date, String message) {
         this.date = date;
         this.message = message;
@@ -21,13 +19,20 @@ public abstract class Tweet {
         this.date = new Date();
     }
 
+    public abstract Boolean isImportant();
+
     public Date getDate() {
         return this.date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getMessage() {
         return this.message;
     }
+
     public void setMessage(String message) throws TweetTooLongException {
         if (message.length() > 140) {
             throw new TweetTooLongException();
@@ -35,12 +40,8 @@ public abstract class Tweet {
         this.message = message;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     @Override
-    public String toString(){
+    public String toString() {
         return date.toString() + " | " + message;
     }
 }
