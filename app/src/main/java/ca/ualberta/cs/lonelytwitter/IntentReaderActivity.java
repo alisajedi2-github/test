@@ -2,7 +2,6 @@ package ca.ualberta.cs.lonelytwitter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -37,8 +36,6 @@ public class IntentReaderActivity extends Activity {
             text = "default text";
 
         ((TextView)findViewById(R.id.intentText)).setText(text);
-        //
-        //
     }
 
     public String transformText(String str) {
