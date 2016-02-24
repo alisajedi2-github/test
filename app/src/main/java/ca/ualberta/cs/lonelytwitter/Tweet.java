@@ -42,6 +42,14 @@ public abstract class Tweet {
 
     @Override
     public String toString() {
+        // Some people thought they would be funny and add tweets without dates...
+        if(date == null) {
+            if(message == null) {
+                return "";
+            } else {
+                return message;
+            }
+        }
         return date.toString() + " | " + message;
     }
 }
