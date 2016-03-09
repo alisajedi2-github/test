@@ -1,5 +1,12 @@
 package ca.ualberta.cs.lonelytwitter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import com.google.gson.Gson;
+
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 import io.searchbox.annotations.JestId;
@@ -21,6 +28,38 @@ public abstract class Tweet {
 
     protected Date date;
     protected String message;
+
+    protected transient Bitmap thumbnail;
+    protected String thumbnailBase64;
+
+    public void addThumbnail(Bitmap newThumbnail) {
+        thumbnail = newThumbnail;
+
+        // TODO: Convert to Base64 and store in thumbnailBase64
+        // FROM: http://mobile.cs.fsu.edu/converting-images-to-json-objects/
+        final int COMPRESSION_QUALITY = 100;
+        ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+        newThumbnail.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
+                byteArrayBitmapStream);
+        byte[] b = byteArrayBitmapStream.toByteArray();
+        thumbnailBase64 = Base64.encodeToString(b, Base64.DEFAULT);
+    }
+
+    public boolean verifyThumbnail() {
+        // If there's a base64string, but not thumbnail, create it.
+        if(thumbnail == null && thumbnailBase64 != null) {
+            byte[] decodedString = Base64.decode(thumbnailBase64, Base64.DEFAULT);
+            thumbnail = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            return true;
+        }
+        return false;
+    }
+
+    public Tweet(Date date, String message, Bitmap thumbnail) {
+        this.date = date;
+        this.message = message;
+        this.thumbnail = thumbnail;
+    }
 
     public Tweet(Date date, String message) {
         this.date = date;

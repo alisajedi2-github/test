@@ -22,13 +22,6 @@ import io.searchbox.core.SearchResult;
 public class ElasticsearchTweetController {
     private static JestDroidClient client;
 
-    //TODO: A function that gets tweets
-    public static ArrayList<Tweet> getTweets() {
-        verifyConfig();
-        // TODO: DO THIS.
-        return null;
-    }
-
     public static class GetTweetsTask extends AsyncTask<String,Void,ArrayList<NormalTweet>> {
 
         @Override
@@ -63,6 +56,11 @@ public class ElasticsearchTweetController {
                 e.printStackTrace();
             }
 
+            // Construct thumbnails for the tweets that have bitmaps.
+            for(NormalTweet tweet : tweets) {
+                tweet.verifyThumbnail();
+            }
+
             return tweets;
         }
     }
@@ -95,7 +93,7 @@ public class ElasticsearchTweetController {
     // If no client, add one
     public static void verifyConfig() {
         if(client == null) {
-            DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080");
+            DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://krasmuss-cmput301.rhcloud.com");
             DroidClientConfig config = builder.build();
 
             JestClientFactory factory = new JestClientFactory();
