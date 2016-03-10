@@ -91,40 +91,40 @@ public class LonelyTwitterActivity extends Activity {
         oldTweetsList.setAdapter(adapter);
     }
 
-    private void loadFromFile() {
-        try {
-            FileInputStream fis = openFileInput(FILENAME);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Gson gson = new Gson();
-
-            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-19 2016
-            Type listType = new TypeToken<ArrayList<NormalTweet>>() {
-            }.getType();
-            tweets = gson.fromJson(in, listType);
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            tweets = new ArrayList<Tweet>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException();
-        }
-    }
-
-    private void saveInFile() {
-        try {
-            FileOutputStream fos = openFileOutput(FILENAME, 0);
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-            Gson gson = new Gson();
-            gson.toJson(tweets, out);
-            out.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException();
-        }
-    }
+//    private void loadFromFile() {
+//        try {
+//            FileInputStream fis = openFileInput(FILENAME);
+//            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+//            Gson gson = new Gson();
+//
+//            // Took from https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html 01-19 2016
+//            Type listType = new TypeToken<ArrayList<NormalTweet>>() {
+//            }.getType();
+//            tweets = gson.fromJson(in, listType);
+//
+//        } catch (FileNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            tweets = new ArrayList<Tweet>();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            throw new RuntimeException();
+//        }
+//    }
+//
+//    private void saveInFile() {
+//        try {
+//            FileOutputStream fos = openFileOutput(FILENAME, 0);
+//            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+//            Gson gson = new Gson();
+//            gson.toJson(tweets, out);
+//            out.flush();
+//            fos.close();
+//        } catch (FileNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            throw new RuntimeException();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            throw new RuntimeException();
+//        }
+//    }
 }
