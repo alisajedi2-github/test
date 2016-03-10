@@ -11,9 +11,6 @@ import java.util.Date;
 
 import io.searchbox.annotations.JestId;
 
-/**
- * Created by romansky on 1/12/16.
- */
 public abstract class Tweet {
     @JestId
     protected String id;
@@ -29,14 +26,22 @@ public abstract class Tweet {
     protected Date date;
     protected String message;
 
+    /* NEW!
+       "transient" is a pretty fun word. In Java, it means it won't serialize the field!
+       (i.e. when GSON wants to make this object a JSON object, it won't include that field)
+     */
     protected transient Bitmap thumbnail;
     protected String thumbnailBase64;
 
+    /* NEW! */
     public void addThumbnail(Bitmap newThumbnail) {
+        if(newThumbnail == null) {
+            // Nice try, wise guy...
+            return;
+        }
         thumbnail = newThumbnail;
 
-        // TODO: Convert to Base64 and store in thumbnailBase64
-        // FROM: http://mobile.cs.fsu.edu/converting-images-to-json-objects/
+        // From http://mobile.cs.fsu.edu/converting-images-to-json-objects/
         final int COMPRESSION_QUALITY = 100;
         ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
         newThumbnail.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
@@ -45,14 +50,14 @@ public abstract class Tweet {
         thumbnailBase64 = Base64.encodeToString(b, Base64.DEFAULT);
     }
 
-    public boolean verifyThumbnail() {
+    /* NEW! */
+    public Bitmap getThumbnail() {
         // If there's a base64string, but not thumbnail, create it.
         if(thumbnail == null && thumbnailBase64 != null) {
             byte[] decodedString = Base64.decode(thumbnailBase64, Base64.DEFAULT);
             thumbnail = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            return true;
         }
-        return false;
+        return thumbnail;
     }
 
     public Tweet(Date date, String message, Bitmap thumbnail) {

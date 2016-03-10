@@ -40,8 +40,17 @@ public class ElasticsearchTweetController {
             // The following searches for the top 10 tweets matching the string passed in (NOTE: HUGE ASSUMPTION PREVIOUSLY)
             //String search_string = "{\"query\":{\"match\":{\"message\":\"" + params[0] + "\"}}}";
 
-            // The following gets the top 10000 tweets matching the string passed in
-            String search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"message\":\"" + params[0] + "\"}}}";
+            // The following orders the results by date
+            //String search_string = "{\"sort\": { \"date\": { \"order\": \"desc\" }}}";
+
+            /* NEW! */
+            String search_string;
+            if(params[0] == "") {
+                search_string = "{\"from\":0,\"size\":10000,\"sort\": { \"date\": { \"order\": \"desc\" }}}";
+            } else {
+                // The following gets the top 10000 tweets matching the string passed in
+                search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"message\":\"" + params[0] + "\"}},\"sort\": { \"date\": { \"order\": \"desc\" }}}}";
+            }
 
             Search search = new Search.Builder(search_string).addIndex("testing").addType("tweet").build();
             try {
@@ -54,11 +63,6 @@ public class ElasticsearchTweetController {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-
-            // Construct thumbnails for the tweets that have bitmaps.
-            for(NormalTweet tweet : tweets) {
-                tweet.verifyThumbnail();
             }
 
             return tweets;

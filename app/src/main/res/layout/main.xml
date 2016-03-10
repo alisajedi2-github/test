@@ -6,13 +6,13 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/oldTweetsTitle"
+        android:id="@+id/tweetsTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="My old tweets" />
 
     <ListView
-        android:id="@+id/oldTweetsList"
+        android:id="@+id/tweetsList"
         android:layout_width="fill_parent"
         android:layout_height="263dp"
         android:layout_weight="1"
@@ -34,7 +34,7 @@
         android:gravity="bottom">
 
         <EditText
-            android:id="@+id/body"
+            android:id="@+id/tweetMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scrollbars="horizontal"
@@ -43,18 +43,18 @@
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/imageButton"
-            android:background="#ff0000" />
+            android:id="@+id/pictureButton"
+            android:background="@android:drawable/ic_menu_camera" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/clear"
+        android:id="@+id/clearButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/clear" />
 
     <Button
-        android:id="@+id/save"
+        android:id="@+id/saveButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/save" />
