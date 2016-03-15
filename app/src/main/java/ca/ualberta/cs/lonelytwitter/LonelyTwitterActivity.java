@@ -18,16 +18,13 @@ import java.util.concurrent.ExecutionException;
 
 public class LonelyTwitterActivity extends Activity {
 
+    private EditText bodyText;
     private ListView oldTweetsList;
 
     private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
     private ArrayAdapter<Tweet> adapter;
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageButton pictureButton;
     private Button saveButton;
-    private Bitmap thumbnail;
-    private EditText bodyText;
 
     public ArrayAdapter<Tweet> getAdapter() {
         return adapter;
@@ -44,17 +41,8 @@ public class LonelyTwitterActivity extends Activity {
         bodyText = (EditText) findViewById(R.id.tweetMessage);
         oldTweetsList = (ListView) findViewById(R.id.tweetsList);
 
-        // NEW! Add-A-Picture!
-        pictureButton = (ImageButton) findViewById(R.id.pictureButton);
-        pictureButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                // Adapted from http://developer.android.com/training/camera/photobasics.html
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-                }
-            }
-        });
+
+
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
 
@@ -62,23 +50,15 @@ public class LonelyTwitterActivity extends Activity {
                 String text = bodyText.getText().toString();
                 NormalTweet latestTweet = new NormalTweet(text);
 
-                /* NEW! Add the thumbnail */
-                latestTweet.addThumbnail(thumbnail);
+                tweets.add(latestTweet);
 
-                /* NEW! Index at 0 should mean it adds at the top of the list */
-                tweets.add(0, latestTweet);
+
                 adapter.notifyDataSetChanged();
 
                 // Add the tweet to Elasticsearch
                 ElasticsearchTweetController.AddTweetTask addTweetTask = new ElasticsearchTweetController.AddTweetTask();
                 addTweetTask.execute(latestTweet);
 
-                /* NEW! */
-                // Clear the inputs!
-                bodyText.setText("");
-                // From http://stackoverflow.com/questions/11835251/remove-image-resource-of-imagebutton
-                pictureButton.setImageResource(android.R.color.transparent);
-                thumbnail = null;
 
                 setResult(RESULT_OK);
             }
@@ -91,6 +71,7 @@ public class LonelyTwitterActivity extends Activity {
 
         // Get the latest tweets from Elasticsearch
         ElasticsearchTweetController.GetTweetsTask getTweetsTask = new ElasticsearchTweetController.GetTweetsTask();
+//        getTweetsTask.execute("test");
         getTweetsTask.execute("");
         try {
             tweets = new ArrayList<Tweet>();
@@ -106,15 +87,4 @@ public class LonelyTwitterActivity extends Activity {
         oldTweetsList.setAdapter(adapter);
     }
 
-    /* NEW!
-     * From http://developer.android.com/training/camera/photobasics.html
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            thumbnail = (Bitmap) extras.get("data");
-            pictureButton.setImageBitmap(thumbnail);
-        }
-    }
 }
