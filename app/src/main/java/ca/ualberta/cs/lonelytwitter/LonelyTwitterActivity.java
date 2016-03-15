@@ -82,6 +82,7 @@ public class LonelyTwitterActivity extends Activity {
             e.printStackTrace();
         }
 
+//        adapter = new ArrayAdapter<Tweet>(this, R.layout.list_item, tweets);
         // Binds tweet list with view, so when our array updates, the view updates with it
         adapter = new TweetAdapter(this, tweets); /* NEW! */
         oldTweetsList.setAdapter(adapter);
